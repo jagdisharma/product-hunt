@@ -78,10 +78,10 @@ WSGI_APPLICATION = 'producthunt.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'producthuntdb',
-        'USER': 'postgres',
-        'PASSWORD': 'Good@1234',
-        'HOST': 'localhost',
+        'NAME': 'd1rij2bkslpn19',
+        'USER': 'thhbrseybrhkda',
+        'PASSWORD': '3216f26c48de0b31f191a267196e1dca0db8c558721185b56abccaa6b910749e',
+        'HOST': 'ec2-174-129-241-114.compute-1.amazonaws.com',
         'PORT' : '5432',
     }
 }
