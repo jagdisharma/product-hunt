@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block content%}
+<h1>Following</h1>
+<div class="row following-container">
+    {% for following in followings.all %}
+        <div class="col-md-12">
+            <div class="row tabs-container">
+                <div class="col-md-2">
+                    <img class="profile_picture" src="{% static 'default_profile.png' %}">
+                </div>
+                <div class="col-md-8">
+                    <div class="row user-label">
+                        <div class="col-md-3">
+                            <p class="username-label">{{ following.user_to }}</p>
+                        </div>
+                        <div class="col-md-4">
+                            <button class="btn btn-primary">Unfollow</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+{% endblock %}

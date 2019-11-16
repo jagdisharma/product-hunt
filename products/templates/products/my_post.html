@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block content %}
+
+{% if posts.count > 0 %}
+    {% for post in posts.all %}
+        <div class="row" style="margin: 10px;padding: 10px;background-color: aliceblue;">
+            <div class="col-md-12">
+                <div class="row pb-3" >
+                    <div class="col-md-12" style="cursor:pointer;">
+                        <img src="{% static 'default_profile.png' %}" width="40" height="40" class="profile_pic"/> {{ post.hunter.username }}
+                        <small class="form-text text-muted">
+                            {% now "Y-m-d" as todays_date %}
+                            {% if post.pub_date|date:"Y-m-d" < todays_date  %}
+                                {{ post.pub_date|date:"M d, Y" }}
+                            {% else %}
+                                Today
+                            {% endif %}
+                        </small>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2" style="cursor:pointer;" onclick="window.location='{% url 'details' post.id %}'">
+                        <img src="{{ post.icon.url }}" class="img-fluid">
+                    </div>
+                    <div class="col-md-6" style="cursor:pointer;" onclick="window.location='{% url 'details' post.id %}'">
+                        <h1>{{ post.title }}</h1>
+                        <p>{{ post.summary }}...</p>
+                    </div>
+                    <div class="col-md-2">
+                        <a href="{% url 'edit_post' post.id %}"><button class="btn btn-primary btn-lg btn-block"> Edit</button></a>
+                    </div>
+                    <div class="col-md-2">
+                        <a href="{% url 'delete_post' post.id %}"><button class="btn btn-danger btn-lg btn-block">Remove</button></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% else %}
+    <div class="row" style="margin: 10px;padding: 10px;background-color: aliceblue;">
+         <div class="col-md-5">
+             <h5>You have not posted anything.</h5>
+         </div>
+    </div>
+{% endif %}
+{% endblock %}
