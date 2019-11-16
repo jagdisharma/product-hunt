@@ -5,7 +5,7 @@ class Product(models.Model):
     title = models.CharField(max_length=255)
     url = models.TextField()
     pub_date = models.DateTimeField()
-    votes_total = models.IntegerField(default=1)
+    #votes_total = models.IntegerField(default=1)
     image = models.ImageField(upload_to='images/')
     icon = models.ImageField(upload_to='images/')
     body = models.TextField()
@@ -17,3 +17,8 @@ class Product(models.Model):
     def summary(self):
         return self.body[:200]
 # Create your models here.
+
+class Upvote(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    created = models.DateTimeField(auto_now_add=True)

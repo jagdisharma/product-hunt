@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block content%}
+<h1>Update Product</h1>
+{% if error %}
+    <div class="alert alert-danger" role="alert">
+        {{ error }}
+    </div>
+{% endif %}
+<div class="row">
+    <div class="col-md-8">
+        <form method="post" action="{% url 'edit_post' post.id %}" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group">
+                Title:
+                <input type="text" placeholder="Title" value="{{ post.title }}" class="form-control" name="title">
+            </div>
+            <div class="form-group">
+                Body:
+                <input type="textbox" placeholder="Body" value="{{ post.body }}" class="form-control" name="body">
+            </div>
+            <div class="form-group">
+                Url:
+                <input type="text" placeholder="Url" value="{{ post.url }}" class="form-control" name="url">
+            </div>
+            <div class="form-group">
+                Icon:
+                <input type="file" value="{{ post.icon.url }}" placeholder="Icon" class="form-control" name="icon">
+                <img src="{{ post.icon.url }}" class="img-fluid" width="100" height="100">
+            </div>
+            <div class="form-group">
+                Image:
+                <input type="file" value="{{ post.image.url }}" placeholder="Image" class="form-control" name="image">
+                <img src="{{ post.image.url }}" class="img-fluid" width="150" height="150">
+            </div>
+            <input type="submit" class="btn btn-primary form-control" value="Update Product">
+        </form>
+    </div>
+</div>
+
+{% endblock %}

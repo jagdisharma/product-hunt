@@ -35,6 +35,7 @@
     <!-- Custom styles for this template -->
     <link href="album.css" rel="stylesheet">
     <link rel="shortcut icon" type="image/png" href="{% static 'logo.png' %}" >
+    <link rel="stylesheet"  href="{% static 'front/css/style.css' %}" >
   </head>
   <body>
     <header>
@@ -52,7 +53,13 @@
                   <a class="nav-link" href="{% url 'create' %}"><span class="oi oi-plus"></span></a>
                 </li>
                 <li class="nav-item">
+                  <a class="nav-link" href="{% url 'myposts' %}">Posted By Me</a>
+                </li>
+                <li class="nav-item">
                   <a class="nav-link" href="javascript:{document.getElementById('logout').submit()}">Logout</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'profile' %}">({{ user.username }})</a>
                 </li>
                 <form id="logout" method="post" action="{% url 'logout' %}">
                   {% csrf_token %}
