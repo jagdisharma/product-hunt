@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from accounts.models import Contact
+from products.models import Product
 
 
 def signup(request):
@@ -59,6 +60,48 @@ def following(request):
     current_user = request.user
     followings = Contact.objects.filter(user_from=current_user)
     return render(request, 'accounts/following.html',{'followings': followings})
+
+@login_required(login_url='/accounts/login')
+def follow(request, user_id):
+    current_user = request.user
+    userExists = User.objects.get(pk=user_id)
+    if userExists:
+        contact = Contact()
+        contact.user_from = current_user
+        contact.user_to = userExists
+        contact.save()
+    return redirect('viewUserProfile' , username =userExists.username)
+
+@login_required(login_url='/accounts/login')
+def unfollow(request, user_id):
+    current_user = request.user
+    userExists = User.objects.get(pk=user_id)
+    if userExists:
+        contact = Contact.objects.filter(user_to=userExists, user_from= current_user)
+        contact.delete()
+    return redirect('viewUserProfile' , username =userExists.username)
+
+@login_required(login_url='/accounts/login')
+def viewUserProfile(request, username):
+    userData = User.objects.get(username=username)# for getting single entry fron database
+    if userData ==  request.user:
+        return redirect('profile')
+    #userData = User.objects.filter(username=username)# for getting multiple entry fron database
+    followers = Contact.objects.filter(user_to=userData)
+    followings = Contact.objects.filter(user_from=userData)
+    posts = Product.objects.filter(hunter=userData)
+
+    loggedInUserFollow = Contact.objects.filter(user_to=userData, user_from = request.user)
+    followedByLoggedInUser = True
+    if not loggedInUserFollow:
+        followedByLoggedInUser = False
+    return render(request, 'accounts/view-profile.html',{
+        'viewUser': userData,
+        'followers' : followers,
+        'followings': followings,
+        'posts': posts,
+        'followedByLoggedInUser':followedByLoggedInUser
+    })
 
 @login_required(login_url='/accounts/login')
 def changePassword(request):

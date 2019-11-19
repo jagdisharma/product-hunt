@@ -7,7 +7,9 @@
         <div class="col-md-12">
             <div class="row pb-3" >
                 <div class="col-md-12" style="cursor:pointer;">
-                    <img src="{% static 'default_profile.png' %}" width="40" height="40" class="profile_pic"/> {{ product.hunter.username }}
+                    <div onclick="window.location='{% url 'viewUserProfile' username=product.hunter.username %}'">
+                        <img src="{% static 'default_profile.png' %}" width="40" height="40" class="profile_pic"/> {{ product.hunter.username }}
+                    </div>
                     <small class="form-text text-muted">
                         {% now "Y-m-d" as todays_date %}
                         {% if product.pub_date|date:"Y-m-d" < todays_date  %}

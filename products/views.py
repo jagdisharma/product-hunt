@@ -5,7 +5,7 @@ from django.utils import timezone
 from .models import Product,Upvote,User
 
 def home(request):
-    products = Product.objects.order_by('-pub_date')
+    products = Product.objects.exclude(hunter = User.objects.get(is_superuser=True)).order_by('-pub_date')
     return render(request,'products/home.html', {'products' :  products})
 
 @login_required(login_url='/accounts/login')
